@@ -6,7 +6,7 @@ var credential;
 if (process.env.FIREBASE_PRIVATE_KEY) {
   credential = admin.credential.cert({
     projectId: process.env.FIREBASE_PROJECT_ID,
-    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\\\n/, '\n'),
+    privateKey: process.env.FIREBASE_PRIVATE_KEY,
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL
   });
 } else {
@@ -17,7 +17,7 @@ console.log(credential.certificate_.privateKey);
 console.log("\n\n");
 console.log(process.env.FIREBASE_PRIVATE_KEY);
 
-credential.certificate_.privateKey = credential.certificate_.privateKey.replace(/\\n/, "\r");
+credential.certificate_.privateKey = credential.certificate_.privateKey.replace(/\\n/g, "\n");
 
 console.log("\n\n");
 console.log(credential.certificate_.privateKey);
