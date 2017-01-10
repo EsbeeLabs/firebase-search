@@ -20,6 +20,8 @@ var algoliaService = require('./services/algolia')(ref);
 console.log(JSON.stringify(admin.credential.cert(env.firebaseConfig.serviceAccount)));
 console.log("\n\n");
 console.log(JSON.stringify(credential));
+console.log("\n\n");
+console.log(process.env.FIREBASE_PRIVATE_KEY);
 try {
   ref.child('Search/Comments').once('value', function (snap) {
     console.log('numChildren', snap.numChildren());
