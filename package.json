@@ -1,7 +1,7 @@
 {
   "name": "esbee-firebase-search",
   "version": "1.0.0",
-  "description": "",
+  "description": "Syncing to Algolia",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
