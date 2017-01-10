@@ -12,16 +12,16 @@ var ref = admin.database().ref();
 var searchService = require('./services/search')(ref);
 var algoliaService = require('./services/algolia')(ref);
 
-// ref.child('Search/Comments').once('value', function(snap) {
-//   console.log('numChildren', snap.numChildren());
-// }
+ref.child('Search/Comments').once('value', function(snap) {
+  console.log('numChildren', snap.numChildren());
+});
 
 console.log(1);
 algoliaService.start()
   .catch(function(err) {
     console.log('err', err);
   });
-  
+
 searchService.listenToPosts();
 
 console.log('setting up rebuild', ref.child('Queue/rebuild').toString());
