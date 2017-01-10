@@ -18,14 +18,15 @@ var algoliaService = require('./services/algolia')(ref);
 
 console.log(1);
 algoliaService.start()
-  .then(function () {
-    console.log(2);
-    return searchService.listenToPosts();
-  })
+  .catch(function(err) {
+    console.log('err', err);
+  });
+searchService.listenToPosts()
   .catch(function(err) {
     console.log('err', err);
   });
 
+console.log('setting up rebuild', ref.child('Queue/rebuild').toString());
 ref.child('Queue/rebuild').on('child_changed', function() {
   console.log(3);
   algoliaService.stop();
