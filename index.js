@@ -25,9 +25,6 @@ algoliaService.start()
   .then(function () {
     console.log(2);
     return searchService.listenToPosts();
-  })
-  .catch(function(err) {
-    console.log('searchService error', err);
   });
 
 ref.child('Queue/rebuild').on('child_changed', function() {
