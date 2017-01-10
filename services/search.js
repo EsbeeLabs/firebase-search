@@ -1,4 +1,4 @@
-_ = require('lodash');
+var _ = require('lodash');
 
 module.exports = function (ref) {
   var postsRef = ref.child('Posts');
