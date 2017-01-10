@@ -1,6 +1,6 @@
 {
   "name": "esbee-firebase-search",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Syncing to Algolia",
   "main": "index.js",
   "scripts": {
