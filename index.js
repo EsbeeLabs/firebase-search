@@ -1,5 +1,5 @@
 var admin = require("firebase-admin");
-var env = require('./environment.json');
+var env = require('./services/environment');
 var _ = require('lodash');
 
 admin.initializeApp({

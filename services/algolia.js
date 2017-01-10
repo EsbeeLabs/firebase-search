@@ -1,5 +1,5 @@
 var FirebaseSearch = require('quiver-firebase-search');
-var env = require('../environment.json');
+var env = require('./environment');
 
 module.exports = function (ref) {
   var commentsSearchRef = ref.child('Search/Comments');
