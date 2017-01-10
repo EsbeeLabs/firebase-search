@@ -6,12 +6,21 @@ var credential;
 if (process.env.FIREBASE_PRIVATE_KEY) {
   credential = admin.credential.cert({
     projectId: process.env.FIREBASE_PROJECT_ID,
-    privateKey: process.env.FIREBASE_PRIVATE_KEY,
+    privateKey: process.env.FIREBASE_PRIVATE_KEY.replace(/\\\\n/, '\n'),
     clientEmail: process.env.FIREBASE_CLIENT_EMAIL
   });
 } else {
   credential = admin.credential.cert(env.firebaseConfig.serviceAccount);
 }
+
+console.log(JSON.stringify(credential));
+console.log("\n\n");
+console.log(process.env.FIREBASE_PRIVATE_KEY);
+
+credential.certificate_.privatekey = credential.certificate_.privatekey.replace(/\\\\n/, '\n');
+
+console.log("\n\n");
+console.log(process.env.FIREBASE_PRIVATE_KEY);
 
 admin.initializeApp({
   credential: credential,
@@ -22,11 +31,6 @@ var ref = admin.database().ref();
 var searchService = require('./services/search')(ref);
 var algoliaService = require('./services/algolia')(ref);
 
-// console.log(JSON.stringify(admin.credential.cert(env.firebaseConfig.serviceAccount)));
-// console.log("\n\n");
-console.log(JSON.stringify(credential));
-console.log("\n\n");
-console.log(process.env.FIREBASE_PRIVATE_KEY);
 try {
   ref.child('Search/Comments').once('value', function (snap) {
     console.log('numChildren', snap.numChildren());
