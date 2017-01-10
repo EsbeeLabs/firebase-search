@@ -14,6 +14,9 @@ var algoliaService = require('./services/algolia')(ref);
 
 ref.child('Search/Comments').once('value', function(snap) {
   console.log('numChildren', snap.numChildren());
+})
+.catch(function(error) {
+  console.log('numChildren error', error);
 });
 
 console.log(1);
