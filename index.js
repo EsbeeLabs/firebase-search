@@ -22,9 +22,6 @@ var algoliaService = require('./services/algolia')(ref);
 
 console.log(1);
 algoliaService.start()
-  .catch(function(err) {
-    console.log('algoliaService error', err);
-  })
   .then(function () {
     console.log(2);
     return searchService.listenToPosts();
