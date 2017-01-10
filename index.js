@@ -1,17 +1,7 @@
 var admin = require("firebase-admin");
 var env = require('./services/environment');
 var _ = require('lodash');
-var credential;
-
-if (process.env.FIREBASE_PRIVATE_KEY) {
-  credential = admin.credential.cert({
-    projectId: process.env.FIREBASE_PROJECT_ID,
-    privateKey: process.env.FIREBASE_PRIVATE_KEY,
-    clientEmail: process.env.FIREBASE_CLIENT_EMAIL
-  });
-} else {
-  credential = admin.credential.cert(env.firebaseConfig.serviceAccount);
-}
+var credential = admin.credential.cert(env.firebaseConfig.serviceAccount);
 
 console.log(credential.certificate_.privateKey);
 console.log("\n\n");
