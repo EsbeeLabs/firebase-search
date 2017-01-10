@@ -10,9 +10,6 @@ admin.initializeApp({
 });
 
 var ref = admin.database().ref();
-
-console.log(ref.toString());
-
 var searchService = require('./services/search')(ref);
 var algoliaService = require('./services/algolia')(ref);
 

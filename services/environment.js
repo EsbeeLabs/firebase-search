@@ -1,6 +1,13 @@
 var env;
+
 try {
   env = require('../environment.json');
+  var serviceAccount = require(env.firebaseConfig.serviceAccount);
+  env.firebaseConfig.serviceAccount = {
+    projectId: serviceAccount.project_id,
+    clientEmail: serviceAccount.client_email,
+    privateKey: serviceAccount.private_key
+  }
 } catch (e) {
   env = {
     "firebaseConfig": {
