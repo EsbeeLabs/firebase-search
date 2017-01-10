@@ -27,13 +27,17 @@ algoliaService.start()
   });
 
 ref.child('Queue/rebuild').on('child_changed', function() {
+  console.log(3);
   algoliaService.stop();
 
+  console.log(4);
   return searchService.rebuild()
     .then(function() {
+      console.log(5);
       return algoliaService.build();
     })
     .then(function() {
+      console.log(6);
       return algoliaService.start();
     });
 });
