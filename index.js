@@ -12,33 +12,39 @@ var ref = admin.database().ref();
 var searchService = require('./services/search')(ref);
 var algoliaService = require('./services/algolia')(ref);
 
-ref.child('Search/Comments').once('value', function(snap) {
-  console.log('numChildren', snap.numChildren());
-})
-.catch(function(error) {
-  console.log('numChildren error', error);
-});
+console.log(admin.credential.cert(env.firebaseConfig.serviceAccount));
+try {
+  ref.child('Search/Comments').once('value', function (snap) {
+    console.log('numChildren', snap.numChildren());
+  })
+    .catch(function (error) {
+      console.log('numChildren error', error);
+    });
+
+} catch (e) {
+  console.log('catch error', e);
+}
 
 console.log(1);
 algoliaService.start()
-  .catch(function(err) {
+  .catch(function (err) {
     console.log('err', err);
   });
 
 searchService.listenToPosts();
 
 console.log('setting up rebuild', ref.child('Queue/rebuild').toString());
-ref.child('Queue/rebuild').on('child_changed', function() {
+ref.child('Queue/rebuild').on('child_changed', function () {
   console.log(3);
   algoliaService.stop();
 
   console.log(4);
   return searchService.rebuild()
-    .then(function() {
+    .then(function () {
       console.log(5);
       return algoliaService.build();
     })
-    .then(function() {
+    .then(function () {
       console.log(6);
       return algoliaService.start();
     });
