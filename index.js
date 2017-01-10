@@ -13,14 +13,14 @@ if (process.env.FIREBASE_PRIVATE_KEY) {
   credential = admin.credential.cert(env.firebaseConfig.serviceAccount);
 }
 
-console.log(credential);
+console.log(credential.certificate_.privateKey);
 console.log("\n\n");
 console.log(process.env.FIREBASE_PRIVATE_KEY);
 
 credential.certificate_.privateKey = credential.certificate_.privateKey.replace(/\\\\n/, '\n');
 
 console.log("\n\n");
-console.log(credential);
+console.log(credential.certificate_.privateKey);
 
 admin.initializeApp({
   credential: credential,
