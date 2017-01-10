@@ -20,7 +20,7 @@ console.log(process.env.FIREBASE_PRIVATE_KEY);
 credential.certificate_.privateKey = credential.certificate_.privateKey.replace(/\\\\n/, '\n');
 
 console.log("\n\n");
-console.log(process.env.FIREBASE_PRIVATE_KEY);
+console.log(JSON.stringify(credential));
 
 admin.initializeApp({
   credential: credential,
