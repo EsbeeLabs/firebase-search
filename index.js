@@ -17,7 +17,7 @@ console.log(credential.certificate_.privateKey);
 console.log("\n\n");
 console.log(process.env.FIREBASE_PRIVATE_KEY);
 
-credential.certificate_.privateKey = credential.certificate_.privateKey.replace(/\n/, "\r");
+credential.certificate_.privateKey = credential.certificate_.privateKey.replace(/\\n/, "\r");
 
 console.log("\n\n");
 console.log(credential.certificate_.privateKey);
