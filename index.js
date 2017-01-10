@@ -21,10 +21,8 @@ algoliaService.start()
   .catch(function(err) {
     console.log('err', err);
   });
-searchService.listenToPosts()
-  .catch(function(err) {
-    console.log('err', err);
-  });
+  
+searchService.listenToPosts();
 
 console.log('setting up rebuild', ref.child('Queue/rebuild').toString());
 ref.child('Queue/rebuild').on('child_changed', function() {
