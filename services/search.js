@@ -4,6 +4,16 @@ module.exports = function (ref) {
   var postsRef = ref.child('Posts');
   var commentsSearchRef = ref.child('Search/Comments');
 
+  function formatComment(postId, comment) {
+    return {
+      postId: postId,
+      userComment: comment,
+      userCommentParts: comment.split(' ').filter(function (part) {
+        return part.length > 2
+      })
+    };
+  };
+
   function syncPostComments(postId, post) {
     var commentKeys = Object.keys(post.comments || {});
     var i = commentKeys.length;
@@ -14,11 +24,7 @@ module.exports = function (ref) {
     while (i--) {
       key = commentKeys[i];
       comment = post.comments[key];
-      updates[key] = {
-        userComment: comment.userComment,
-        postId: postId,
-        // userName: comment.userName
-      };
+      updates[key] = formatComment(postId, comment.userComment);
     }
     return commentsSearchRef.update(updates);
   };
@@ -52,13 +58,7 @@ module.exports = function (ref) {
         });
 
         for (var key in postComments) {
-          updates[key] = {
-            postId: postId,
-            userComment: postComments[key].userComment,
-            userCommentParts: postComments[key].userComment.split(' ').filter(function(part) {
-              return part.length > 3
-            })
-          };
+          updates[key] = formatComment(postId, postComments[key].userComment);
         }
 
         return commentsSearchRef.update(updates);
@@ -99,13 +99,13 @@ module.exports = function (ref) {
   };
 
   function stopListening() {
-    handlers.forEach(function(handler) {
+    handlers.forEach(function (handler) {
       postsRef.off(handler.event, handler.func);
     });
   };
 
   function startListening() {
-    handlers.forEach(function(handler) {
+    handlers.forEach(function (handler) {
       postsRef.on(handler.event, handler.func);
     });
   };
@@ -139,7 +139,7 @@ module.exports = function (ref) {
           query.on('child_added', handlePost);
         });
       })
-      .then(function() {
+      .then(function () {
         startListening();
         return true;
       });
