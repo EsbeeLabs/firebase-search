@@ -54,7 +54,10 @@ module.exports = function (ref) {
         for (var key in postComments) {
           updates[key] = {
             postId: postId,
-            userComment: postComments[key].userComment
+            userComment: postComments[key].userComment,
+            userCommentParts: postComments[key].userComment.split(' ').filter(function(part) {
+              return part.length > 3
+            })
           };
         }
 
