@@ -8,7 +8,7 @@ module.exports = function (ref) {
     return {
       postId: postId,
       userComment: comment,
-      userCommentParts: comment.split(' ').filter(function (part) {
+      userCommentParts: !comment ? null : comment.split(' ').filter(function (part) {
         return part.length > 2
       })
     };
