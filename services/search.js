@@ -7,7 +7,7 @@ module.exports = function (ref) {
   function formatComment(postId, comment) {
     return {
       postId: postId,
-      userComment: comment,
+      userComment: comment || null,
       userCommentParts: !comment ? null : comment.split(' ').filter(function (part) {
         return part.length > 2
       })
