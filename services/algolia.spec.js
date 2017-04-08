@@ -14,18 +14,20 @@ beforeEach(() => {
   algoliaService = new AlgoliaService(ref, { index: 'test:comments', env: env });
   search = algoliaService.search;
   searchRef = ref.child('Search/Comments');
-
-  search.on('all', function(record) {
-    console.log('event', record);
-  });
 });
 
 describe('Aloglia Service', () => {
-  beforeEach(done => clean().then(done));
+  beforeEach(done =>
+    clean().then(() => {
+      search.algolia.search('test').then(res => {
+        expect(res.nbHits).toEqual(0);
+        done();
+      });
+    }));
   afterEach(done => clean().then(done));
 
   function clean() {
-    return Promise.resolve().then(() => searchRef.remove()).then(() => search.algolia.clearIndex());
+    return Promise.resolve().then(() => searchRef.remove()).then(() => search.algolia.clearIndex(true));
   }
 
   it(
@@ -41,9 +43,14 @@ describe('Aloglia Service', () => {
       );
 
       let counter = 0;
+      let results = [];
       search.on('algolia_child_added', function(record) {
         counter++;
-        console.log('algolia_child_added', counter, record);
+        results.push(record.postId);
+        if (counter == 5) {
+          expect(results.sort().join()).toEqual('test-0,test-1,test-2,test-3,test-4');
+          done();
+        }
       });
 
       // searchRef.on('child_added', snap => {

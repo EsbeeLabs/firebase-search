@@ -23,7 +23,7 @@
   "dependencies": {
     "firebase-admin": "^4.0.4",
     "lodash": "^4.17.4",
-    "quiver-firebase-search": "^1.0.4"
+    "quiver-firebase-search": "^1.0.6"
   },
   "devDependencies": {
     "jasmine": "^2.5.3"
